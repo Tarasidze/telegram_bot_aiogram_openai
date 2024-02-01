@@ -28,15 +28,22 @@
    ```
 3. **Raname  .env-EXAMPLE to .env file and define your api keys:**
 
-4. **Run bot:**
+4. **Create database**
+   - on windows
+    ```shell
+    telegram_bot\database\db_user_create.py
+    ```
+
+5. **Run bot:**
     ```shell
         python tele_bot.py 
    ```
 
 ## Screens
 
-![Screens](telebot_1.jpg)
-![Screens](telebot_2.jpg)
-![Screens](telebot_3.jpg)
-![Screens](telebot_4.jpg)
-![Screens](telebot_5.jpg)
+![Screens](screens/telebot_1.jpg)
+![Screens](screens/telebot_2.jpg)
+![Screens](screens/telebot_2_1.jpg)
+![Screens](screens/telebot_2_2.jpg)
+![Screens](screens/telebot_4.jpg)
+![Screens](screens/telebot_5.jpg)
