@@ -45,6 +45,5 @@
 ![Screens](screens/telebot_2.jpg)
 ![Screens](screens/telebot_2_1.jpg)
 ![Screens](screens/telebot_2_2.jpg)
-![Screens](screens/telebot_3.jpg)
 ![Screens](screens/telebot_4.jpg)
 ![Screens](screens/telebot_5.jpg)
