@@ -208,7 +208,7 @@ async def user_photo(message: types.Message):
         await message.answer("Дякую за фото!")
 
 
-@dp.errors_handlers(exception=BotBlocked)
+@dp.errors_handler(exception=BotBlocked)
 async def error_bot_blocked(update: types.Update, exception: BotBlocked, state: FSMContext) -> bool:
     ser_id = state.user
     await set_bot_blocked_db(user_id=ser_id, status="blocked")
