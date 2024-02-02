@@ -5,6 +5,7 @@ from aiogram import executor, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.types import ContentType
+from aiogram.utils.exceptions import BotBlocked
 
 from telegram_bot.services.bot_start_button import keyboard_start, start_button
 from telegram_bot.services.tele_bot_config import dp, bot
@@ -26,6 +27,7 @@ from telegram_bot.database.database_manager import (
     add_comment_to_db,
     save_image_to_db,
     save_image_link_to_db,
+    set_bot_blocked_db,
 )
 
 
@@ -202,6 +204,12 @@ async def user_photo(message: types.Message):
         )
 
         await message.answer("Дякую за фото!")
+
+
+@dp.errors_handlers(exception=BotBlocked)
+async def error_bot_blocked(update: types.Update, exception: BotBlocked, state: FSMContext) -> bool:
+    ser_id = state.user
+    await set_bot_blocked_db(user_id=ser_id, status="blocked")
 
 
 if __name__ == '__main__':

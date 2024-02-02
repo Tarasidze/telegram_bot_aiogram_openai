@@ -28,3 +28,4 @@ class User(MyBase):
     comment: Mapped[str] = mapped_column(nullable=True)
     image: Mapped[bytes] = mapped_column(nullable=True)
     image_link: Mapped[str] = mapped_column(nullable=True)
+    status: Mapped[str] = mapped_column(nullable=True)
