@@ -9,7 +9,7 @@ from aiogram.utils.exceptions import BotBlocked
 
 from telegram_bot.services.bot_start_button import keyboard_start, start_button
 from telegram_bot.services.tele_bot_config import dp, bot
-from telegram_bot.services.loger import log_on_startup, log_on_shutdown
+from telegram_bot.services.loger import log_on_startup, log_on_shutdown, log_open_ai_error
 from telegram_bot.services.bot_location_button import keyboard_location, locations
 from telegram_bot.services.openai_manager import send_request_to_ai
 
@@ -148,13 +148,15 @@ async def user_comment(message: types.Message, state: FSMContext):
         f"Також Ви можете добавити фото(jpg, png), посилання на зображення, \n"
         f"або повернутись на початок",
         reply_markup=keyboard_start)
-
-    await message.answer(
-        await send_request_to_ai(
-            location=user_data.get("location"),
-            message=message.text
+    try:
+        await message.answer(
+            await send_request_to_ai(
+                location=user_data.get("location"),
+                message=message.text
+            )
         )
-    )
+    except Exception as e:
+        await log_open_ai_error(e.__str__())
 
     await UserChoice.photo_link.set()
 
