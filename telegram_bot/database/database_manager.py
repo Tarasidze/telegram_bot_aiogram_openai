@@ -71,3 +71,14 @@ async def save_image_link_to_db(user_id: int, image_link: bytes) -> bool:
         return True
 
     return False
+
+
+async def set_bot_blocked_db(user_id: int, status: str) -> bool:
+    user = db.query(User).filter_by(user_id=user_id).order_by(desc(User.join_time)).first()
+
+    if user:
+        user.status = status
+        db.commit()
+        return True
+
+    return False
