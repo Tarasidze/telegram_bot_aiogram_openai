@@ -27,3 +27,10 @@ async def log_on_shutdown(dp):
             f"Time: {datetime.datetime.now()},"
             f"Bot has end"
         )
+
+
+async def log_open_ai_error(error: str):
+    logging.info(
+            f"Time: {datetime.datetime.now()},"
+            f"OpenAi Error {error}"
+        )
