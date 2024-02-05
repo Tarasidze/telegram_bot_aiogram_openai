@@ -25,7 +25,6 @@
         ```bash
         source venv/bin/activate 
         ```
-   ```
 3. **Raname  .env-EXAMPLE to .env file and define your api keys:**
 
 4. **Create database**

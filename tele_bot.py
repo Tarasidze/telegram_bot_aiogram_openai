@@ -29,6 +29,7 @@ from telegram_bot.database.database_manager import (
     save_image_link_to_db,
     set_bot_blocked_db,
 )
+from telegram_bot.services.throttling import rate_limit
 
 
 class UserChoice(StatesGroup):
@@ -38,6 +39,7 @@ class UserChoice(StatesGroup):
     photo_link = State()
 
 
+@rate_limit(limit=3, key="/start")
 @dp.message_handler(commands=["start", "help"],)
 async def send_welcome(message: types.Message, state: FSMContext):
     """This handler will be called when client
@@ -88,7 +90,7 @@ async def choose_location(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(state=UserChoice.location)
-async def choose_location(message: types.Message):
+async def get_location_first(message: types.Message):
     """The function calls when a user tries to type instead of pressing button."""
 
     await message.answer(
@@ -114,6 +116,7 @@ async def handle_poit(message: types.Message, state: FSMContext):
             reply_markup=keyboard_start
         )
         user_data = await state.get_data()
+
         await add_location_and_point_to_db(
             user_id=message.from_user.id,
             location=user_data.get("location"),
@@ -157,6 +160,10 @@ async def user_comment(message: types.Message, state: FSMContext):
         )
     except Exception as e:
         await log_open_ai_error(e.__str__())
+
+    await message.answer(
+        "Бажаєте додати посилання або фото?",
+        reply_markup=keyboard_start)
 
     await UserChoice.photo_link.set()
 
